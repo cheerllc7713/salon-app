@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+<rect width="512" height="512" fill="#3E3A36"/>
+<circle cx="256" cy="232" r="150" fill="none" stroke="#A8864E" stroke-width="5"/>
+<text x="256" y="296" text-anchor="middle" font-family='"Noto Serif CJK JP","DejaVu Serif",serif' font-weight="700" font-size="184" fill="#F4EFE7">A</text>
+<text x="256" y="440" text-anchor="middle" font-family='"Noto Serif CJK JP","DejaVu Serif",serif' font-weight="700" font-size="42" letter-spacing="12" fill="#D8BE8E">ARTESANO</text></svg>

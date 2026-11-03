@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Hair craft Artesano ご予約・おすすめ診断</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#3E3A36">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Artesano">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="icon" type="image/svg+xml" href="icon.svg">
+<meta name="description" content="Hair craft Artesanoのおすすめ診断とご予約。髪質・似合う髪色・おすすめクーポンがわかり、ホットペッパービューティーで空き日時を選んで予約できます。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho+B1:wght@600;800&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Cormorant+Garamond:wght@500;600&display=swap">
+<style>
+:root{
+  --bg:#F6F3EE; --surface:#FFFFFF; --ink:#26221E; --muted:#6F675E; --line:#E4DDD3;
+  --accent:#3E3A36; --gold:#A8864E; --soft:#EFE8DD; --pale:#D8BE8E;
+  --f-display:"Shippori Mincho B1","Hiragino Mincho ProN","Yu Mincho",serif;
+  --f-latin:"Cormorant Garamond","Shippori Mincho B1",serif;
+  --f-body:"Zen Kaku Gothic New","Hiragino Sans","Yu Gothic",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:15px;line-height:1.75;
+  padding:env(safe-area-inset-top,0) max(16px,env(safe-area-inset-right,0)) env(safe-area-inset-bottom,0) max(16px,env(safe-area-inset-left,0))}
+button{font:inherit;color:inherit}
+button:focus-visible,a:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.wrap{max-width:560px;margin:0 auto;padding:22px 0 64px;display:flex;flex-direction:column;gap:16px}
+.brand{text-align:center;display:flex;flex-direction:column;gap:0;cursor:pointer;background:none;border:0;padding:0}
+.brand .logo{font-family:var(--f-latin);font-weight:600;font-size:32px;letter-spacing:.24em;margin-left:.24em}
+.brand .sub{font-size:12px;letter-spacing:.18em;color:var(--muted)}
+nav{display:grid;grid-template-columns:repeat(3,1fr);background:var(--surface);border:1px solid var(--line);border-radius:999px;padding:4px;gap:4px}
+nav button{border:0;border-radius:999px;padding:9px 4px;background:transparent;color:var(--muted);font-weight:700;font-size:14px;cursor:pointer}
+nav button[aria-selected=true]{background:var(--accent);color:#fff}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:20px;padding:22px 20px;display:flex;flex-direction:column;gap:14px}
+h1{font-family:var(--f-display);font-weight:800;font-size:clamp(23px,6.4vw,29px);line-height:1.45;margin:0;text-wrap:balance;text-align:center}
+h2{font-family:var(--f-display);font-weight:800;font-size:21px;line-height:1.45;margin:0}
+h3{font-size:12.5px;letter-spacing:.12em;color:var(--muted);margin:4px 0 0;font-weight:700}
+p{margin:0}
+.lead{color:var(--muted);text-align:center}
+.btn{font-weight:700;border-radius:999px;padding:13px 22px;cursor:pointer;border:1.5px solid var(--line);background:transparent;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:6px;text-align:center;line-height:1.4;color:var(--ink)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#fff}
+.btn.gold{background:var(--gold);border-color:var(--gold);color:#fff}
+.btn.block{width:100%}
+.btn.sm{padding:8px 14px;font-size:13.5px}
+.btn:disabled{opacity:.4;cursor:default}
+.seg{display:grid;grid-template-columns:1fr 1fr;gap:4px;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:4px}
+.seg button{border:0;border-radius:10px;padding:9px 4px;background:transparent;color:var(--muted);font-weight:700;cursor:pointer;font-size:14px}
+.seg button[aria-checked=true]{background:var(--surface);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.progress{display:flex;align-items:center;gap:10px;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.bar{flex:1;height:3px;background:var(--line);border-radius:3px;overflow:hidden}
+.bar i{display:block;height:100%;background:var(--gold);transition:width .3s}
+.q{font-family:var(--f-display);font-weight:600;font-size:20px;line-height:1.5;margin:0;text-wrap:balance}
+.hint{margin:-8px 0 0;color:var(--muted);font-size:13px}
+.opts{display:flex;flex-direction:column;gap:10px}
+.opt{text-align:left;background:var(--bg);border:1.5px solid var(--line);border-radius:14px;padding:13px 16px;cursor:pointer;display:flex;gap:12px;align-items:center}
+.opt:hover{border-color:var(--gold)}
+.opt[aria-checked=true]{border-color:var(--accent);background:var(--soft)}
+.opt .dot{flex:none;width:18px;height:18px;border-radius:50%;border:1.5px solid var(--muted)}
+.opt[aria-checked=true] .dot{border:5px solid var(--accent)}
+.opt.multi .dot{border-radius:6px}
+.opt.multi[aria-checked=true] .dot{border:1.5px solid var(--accent);background:var(--accent)}
+.opt small{display:block;color:var(--muted);font-size:12.5px;line-height:1.5}
+.navrow{display:flex;justify-content:space-between;gap:10px}
+.res{background:var(--accent);color:#F4EFE7;border-radius:20px;padding:22px 20px;display:flex;flex-direction:column;gap:12px}
+.res .eyebrow{color:var(--pale)}
+.eyebrow{font-size:12px;letter-spacing:.14em;color:var(--gold);font-weight:700}
+.res .rt{font-family:var(--f-display);font-weight:800;font-size:25px;line-height:1.4}
+.res p,.res li{color:#E9E2D8;font-size:14px}
+.res ul{margin:0;padding-left:1.2em;display:flex;flex-direction:column;gap:4px}
+.swatches{display:flex;flex-wrap:wrap;gap:12px}
+.sw{display:flex;flex-direction:column;align-items:center;gap:4px;font-size:11.5px;color:#E9E2D8;width:70px;text-align:center;line-height:1.35}
+.sw i{width:46px;height:46px;border-radius:50%;border:2px solid rgba(255,255,255,.4)}
+.plan{background:var(--surface);border:1.5px solid var(--line);border-radius:18px;padding:18px;display:flex;flex-direction:column;gap:8px}
+.plan.best{border-color:var(--gold)}
+.plan .top{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.04em;padding:2px 9px;border-radius:999px;background:var(--soft);color:var(--ink)}
+.badge.g{background:var(--gold);color:#fff}
+.badge.n{background:var(--accent);color:#fff}
+.plan .nm{font-weight:700;font-size:15.5px;line-height:1.5}
+.plan .ds{font-size:13px;color:var(--muted);line-height:1.6}
+.plan .why{font-size:13px;line-height:1.6;background:var(--bg);border-radius:10px;padding:8px 12px}
+.plan .pr{display:flex;align-items:baseline;gap:10px;font-variant-numeric:tabular-nums;flex-wrap:wrap}
+.plan .pr b{font-size:21px}
+.plan .pr s{color:var(--muted);font-size:13px}
+.plan .pr small{color:var(--muted);font-size:12.5px}
+.list{display:flex;flex-direction:column;gap:10px}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{border:1.5px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 13px;cursor:pointer;font-size:13.5px}
+.chip[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:#fff}
+.memo{background:var(--bg);border:1px dashed var(--line);border-radius:12px;padding:12px 14px;font-size:13.5px;white-space:pre-wrap;margin:0;font-family:var(--f-body)}
+.note{font-size:12px;color:var(--muted)}
+.empty{color:var(--muted);text-align:center;padding:14px;border:1.5px dashed var(--line);border-radius:14px;font-size:14px}
+.home-btns{display:flex;flex-direction:column;gap:10px}
+.home-btns .btn{justify-content:space-between;padding:16px 20px}
+.home-btns .btn span small{display:block;font-weight:400;font-size:12.5px;opacity:.8}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--accent);color:#fff;padding:10px 18px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.on{opacity:1}
+footer{text-align:center;font-size:12px;color:var(--muted);display:flex;flex-direction:column;gap:4px}
+footer a{color:var(--muted)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <button class="brand" id="home" aria-label="トップへ"><span class="logo">ARTESANO</span><span class="sub">hair craft Artesano</span></button>
+  <nav role="tablist" id="nav"></nav>
+  <main id="app" style="display:flex;flex-direction:column;gap:16px" aria-live="polite"></main>
+  <footer>
+    <span>ご予約はホットペッパービューティーの予約画面で、空き状況を見ながら日時をお選びいただけます。</span>
+    <a href="" id="salonLink">ホットペッパービューティーのサロンページ</a>
+  </footer>
+</div>
+<div class="toast" id="toast"></div>
+<script>
+const CFG = {"sid": "H000404954", "name": "Hair craft Artesano", "logo": "ARTESANO", "sub": "hair craft Artesano", "shop": "https://artesanobase.thebase.in", "lumShop": true, "colorNotes": {"allergy": "カラーでかぶれたことがある方は、ジアミンを使わないヘアマニキュアをおすすめします（当店のヘナはジアミン入りのため対象外です）。", "sensitive": "頭皮がしみやすい方は、ご予約のご要望欄にお書きください。地肌につけない塗り方などでご相談に乗ります。", "clear": "赤みを抑えて透明感を出す「外国人風アディクシーカラー」がおすすめです。", "gloss": "ダメージを抑えるケアカラーに、トリートメントを組み合わせるのがおすすめです。", "gray": "白髪は「しっかり染める」ケアカラーか、ハイライトで「なじませる」方法から選べます。"}, "allergyIds": ["m10"], "coupons": [{"cid": "CP00000009975201", "type": "新規", "n": "新規限定 通常メニューから20％OFF", "p": null, "t": null, "tags": ["any"], "kw": [], "was": null, "d": "ネット予約限定。キッズカット無料クーポンと併用できます", "cond": "", "kind": "pct", "id": "c0", "url": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954&couponId=CP00000009975201&add=0&addMenu=0&rootCd=10"}, {"cid": "CP00000009980886", "type": "再来", "n": "前回のご来店から50日以内 20％OFF", "p": null, "t": null, "tags": ["any"], "kw": [], "was": null, "d": "ネット予約限定。全メニューの通常料金から20%OFF", "cond": "", "kind": "pct", "id": "c1", "url": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954&couponId=CP00000009980886&add=0&addMenu=0&rootCd=10"}, {"cid": "CP00000009951824", "type": "全員", "n": "キッズカット無料（未就学児）", "p": 0, "t": null, "tags": ["kids"], "kw": ["kids"], "was": null, "d": "カット＋カラーのお客様のお子様カットが無料。単品では使えません", "cond": "お一人につきお子様1名・併用可", "kind": "kids", "id": "c2", "url": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954&couponId=CP00000009951824&add=0&addMenu=0&rootCd=10"}, {"cid": "CP00000009981192", "type": "新規", "n": "小学生までキッズカット無料♪親子でキレイ◎カット＋カラー", "p": 11000, "t": 120, "tags": ["cut", "color"], "kw": ["kids"], "was": null, "d": "", "cond": "", "kind": "fixed", "id": "c3", "url": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954&couponId=CP00000009981192&add=0&addMenu=0&rootCd=10"}, {"cid": "CP00000007852933", "type": "全員", "n": "髪質改善◎カット＋カラー＋プリンセスケアトリートメント", "p": 19800, "t": 150, "tags": ["cut", "color", "tr"], "kw": ["damage", "curl", "gloss"], "was": null, "d": "カラーはアディクシーかオーガニックから。白髪もOK", "cond": "", "kind": "fixed", "id": "c4", "url": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954&couponId=CP00000007852933&add=0&addMenu=0&rootCd=10"}, {"cid": "CP00000007586548", "type": "全員", "n": "リタッチカラー＋カット＋トリートメント", "p": 12100, "t": 90, "tags": ["cut", "color", "tr"], "kw": ["gray", "retouch"], "was": 18150, "d": "", "cond": "", "kind": "fixed", "id": "c5", "url": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954&couponId=CP00000007586548&add=0&addMenu=0&rootCd=10"}, {"cid": "CP00000007164390", "type": "再来", "n": "キッズカット無料◎ケアカラー＋カット or トリートメント", "p": 12100, "t": 120, "tags": ["cut", "color"], "kw": ["kids"], "was": null, "d": "", "cond": "", "kind": "fixed", "id": "c6", "url": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954&couponId=CP00000007164390&add=0&addMenu=0&rootCd=10"}, {"cid": "CP00000007019606", "type": "全員", "n": "根元ふんわり♪カット＋ケアカラー＋エクスフィークTR", "p": 15400, "t": 120, "tags": ["cut", "color", "tr"], "kw": ["gray", "volume", "age"], "was": null, "d": "エイジング・白髪のお悩みに。ホームケア1か月付き", "cond": "", "kind": "fixed", "id": "c7", "url": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954&couponId=CP00000007019606&add=0&addMenu=0&rootCd=10"}, {"cid": "CP00000009091313", "type": "全員", "n": "白髪染をする前に！カバーアップハイライトセット", "p": 19800, "t": 180, "tags": ["cut", "color", "tr"], "kw": ["gray", "highTone"], "was": null, "d": "カット＋ハイライト＋カラー＋トリートメント", "cond": "", "kind": "fixed", "id": "c8", "url": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954&couponId=CP00000009091313&add=0&addMenu=0&rootCd=10"}, {"cid": "CP00000006454259", "type": "全員", "n": "髪質改善◎プリンセスケア縮毛矯正＋カット", "p": 26400, "t": 240, "tags": ["cut", "straight", "tr"], "kw": ["curl", "damage"], "was": null, "d": "", "cond": "", "kind": "fixed", "id": "c9", "url": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954&couponId=CP00000006454259&add=0&addMenu=0&rootCd=10"}, {"cid": "CP00000009975215", "type": "全員", "n": "カット＋カラー＋縮毛矯正＋ホットパーマ＋トリートメント", "p": 33000, "t": 300, "tags": ["cut", "color", "straight", "perm", "tr"], "kw": [], "was": null, "d": "", "cond": "", "kind": "fixed", "id": "c10", "url": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954&couponId=CP00000009975215&add=0&addMenu=0&rootCd=10"}, {"cid": "CP00000009975227", "type": "全員", "n": "カット＋カラー＋縮毛矯正＋トリートメント", "p": 26400, "t": 210, "tags": ["cut", "color", "straight", "tr"], "kw": ["curl"], "was": null, "d": "", "cond": "", "kind": "fixed", "id": "c11", "url": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954&couponId=CP00000009975227&add=0&addMenu=0&rootCd=10"}, {"cid": "CP00000009993164", "type": "全員", "n": "白髪の悩みを解決◎プレミアムカラーセット（カット・ホームケア付き）", "p": 16500, "t": 120, "tags": ["cut", "color", "tr"], "kw": ["gray"], "was": null, "d": "白髪を活かすカラー。他店で暗くなった方もご相談ください", "cond": "", "kind": "fixed", "id": "c12", "url": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954&couponId=CP00000009993164&add=0&addMenu=0&rootCd=10"}, {"cid": "CP00000009094764", "type": "全員", "n": "柔らか低ダメージ♪酸性ホットパーマ＋カット", "p": 19800, "t": 150, "tags": ["cut", "perm", "tr"], "kw": ["damage"], "was": null, "d": "", "cond": "", "kind": "fixed", "id": "c13", "url": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954&couponId=CP00000009094764&add=0&addMenu=0&rootCd=10"}, {"cid": "CP00000009852194", "type": "全員", "n": "骨格補正カット＋オーガニックリペア縮毛矯正＋トリートメント", "p": 19800, "t": 180, "tags": ["cut", "straight", "tr"], "kw": ["curl"], "was": null, "d": "強いクセをしっかり伸ばしたい方に", "cond": "", "kind": "fixed", "id": "c14", "url": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954&couponId=CP00000009852194&add=0&addMenu=0&rootCd=10"}, {"cid": "CP00000010491776", "type": "全員", "n": "白髪ぼかしにも最適◎カット＋アンブレラカラー＋トリートメント", "p": 19800, "t": 180, "tags": ["cut", "color", "tr"], "kw": ["gray", "highTone"], "was": null, "d": "部分ブリーチ＋カラー。ホームケア付き", "cond": "", "kind": "fixed", "id": "c15", "url": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954&couponId=CP00000010491776&add=0&addMenu=0&rootCd=10"}, {"cid": "CP00000008289482", "type": "全員", "n": "髪質改善◎カット＋メテオカラー＋トリートメント", "p": 18700, "t": 150, "tags": ["cut", "color", "tr"], "kw": ["damage", "gloss"], "was": 25300, "d": "", "cond": "", "kind": "fixed", "id": "c16", "url": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954&couponId=CP00000008289482&add=0&addMenu=0&rootCd=10"}, {"cid": "CP00000008856403", "type": "全員", "n": "お試し◎髪質改善 プリンセスケアトリートメント", "p": 9900, "t": 60, "tags": ["tr"], "kw": ["damage", "curl", "gloss"], "was": null, "d": "", "cond": "", "kind": "fixed", "id": "c17", "url": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954&couponId=CP00000008856403&add=0&addMenu=0&rootCd=10"}, {"cid": "CP00000008310694", "type": "全員", "n": "メンズ限定 骨格補正カット＋黄金比眉カット", "p": 5500, "t": 60, "tags": ["cut"], "kw": ["men"], "was": null, "d": "", "cond": "男性限定・シャンプーブロー込み", "kind": "fixed", "id": "c18", "url": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954&couponId=CP00000008310694&add=0&addMenu=0&rootCd=10"}, {"cid": "CP00000009081652", "type": "全員", "n": "サラサラ柔らか♪酸性ストレート＋カット", "p": 19800, "t": 180, "tags": ["cut", "straight", "tr"], "kw": ["curl", "damage"], "was": null, "d": "ブリーチ毛などハイダメージ毛も対応", "cond": "", "kind": "fixed", "id": "c19", "url": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954&couponId=CP00000009081652&add=0&addMenu=0&rootCd=10"}, {"cid": "CP00000007019608", "type": "全員", "n": "話題の髪質改善◎カット＋プリンセスケアトリートメント", "p": 14300, "t": 90, "tags": ["cut", "tr"], "kw": ["damage", "curl", "gloss"], "was": null, "d": "", "cond": "", "kind": "fixed", "id": "c20", "url": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954&couponId=CP00000007019608&add=0&addMenu=0&rootCd=10"}], "sets": [{"mid": "SN00000002613838", "n": "髪質改善◎カット＋カラー＋プリンセスケアトリートメント", "p": 25300, "t": 150, "tags": ["cut", "color", "tr"], "kw": ["damage"], "d": "", "id": "m0", "url": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954&setmenuId=SN00000002613838&addMenu=0&rootCd=10"}, {"mid": "SN00000002646513", "n": "骨格補正カット＋ケアカラー（白髪染めも◎）", "p": 13750, "t": 120, "tags": ["cut", "color"], "kw": ["gray"], "d": "", "id": "m1", "url": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954&setmenuId=SN00000002646513&addMenu=0&rootCd=10"}, {"mid": "SN00000002646514", "n": "骨格補正カット＋リタッチケアカラー", "p": 12500, "t": 90, "tags": ["cut", "color"], "kw": ["gray", "retouch"], "d": "", "id": "m2", "url": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954&setmenuId=SN00000002646514&addMenu=0&rootCd=10"}, {"mid": "SN00000000651781", "n": "骨格補正カット＋低ダメージパーマ", "p": 16500, "t": 120, "tags": ["cut", "perm"], "kw": [], "d": "", "id": "m3", "url": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954&setmenuId=SN00000000651781&addMenu=0&rootCd=10"}, {"mid": "SN00000002613721", "n": "骨格補正カット＋オーガニックリペア縮毛矯正＋トリートメント", "p": 28450, "t": 180, "tags": ["cut", "straight", "tr"], "kw": ["curl"], "d": "", "id": "m4", "url": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954&setmenuId=SN00000002613721&addMenu=0&rootCd=10"}, {"mid": "SN00000002613722", "n": "カット＋オーガニックカラー＋低ダメージパーマ＋トリートメント", "p": 28450, "t": 180, "tags": ["cut", "color", "perm", "tr"], "kw": [], "d": "", "id": "m5", "url": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954&setmenuId=SN00000002613722&addMenu=0&rootCd=10"}, {"mid": "SN00000002613723", "n": "カット＋オーガニックリペアホットパーマ＋トリートメント", "p": 28450, "t": 180, "tags": ["cut", "perm", "tr"], "kw": [], "d": "", "id": "m6", "url": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954&setmenuId=SN00000002613723&addMenu=0&rootCd=10"}, {"mid": "SN00000000763424", "n": "カット＋ヘナ", "p": 15400, "t": 120, "tags": ["cut", "color"], "kw": [], "d": "※当店のヘナはジアミン入りです", "id": "m7", "url": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954&setmenuId=SN00000000763424&addMenu=0&rootCd=10"}, {"mid": "SN00000002613724", "n": "骨格補正カット＋前髪縮毛矯正＋トリートメント", "p": 17600, "t": 120, "tags": ["cut", "straight", "tr"], "kw": ["curl"], "d": "", "id": "m8", "url": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954&setmenuId=SN00000002613724&addMenu=0&rootCd=10"}, {"mid": "SN00000001144031", "n": "骨格補正カット＋ヘアマニキュア", "p": 13750, "t": 120, "tags": ["cut", "color"], "kw": ["allergy"], "d": "ジアミン不使用。ブラウン系はネット予約OK", "id": "m9", "url": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954&setmenuId=SN00000001144031&addMenu=0&rootCd=10"}, {"mid": "SN00000002620188", "n": "カラー＋リンケージトリートメント（前髪カット無料）", "p": 13750, "t": 90, "tags": ["color", "tr"], "kw": [], "d": "", "id": "m10", "url": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954&setmenuId=SN00000002620188&addMenu=0&rootCd=10"}, {"mid": "SN00000002646515", "n": "リタッチカラー＋リンケージトリートメント", "p": 12500, "t": 90, "tags": ["color", "tr"], "kw": ["retouch", "gray"], "d": "", "id": "m11", "url": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954&setmenuId=SN00000002646515&addMenu=0&rootCd=10"}, {"mid": "SN00000002646516", "n": "カット＋エクスフィークトリートメント", "p": 10000, "t": 60, "tags": ["cut", "tr"], "kw": ["volume", "age"], "d": "", "id": "m12", "url": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954&setmenuId=SN00000002646516&addMenu=0&rootCd=10"}], "salonUrl": "https://beauty.hotpepper.jp/slnH000404954/", "couponUrl": "https://beauty.hotpepper.jp/slnH000404954/coupon/", "reserveUrl": "https://beauty.hotpepper.jp/CSP/bt/reserve/?storeId=H000404954"};
+const $=s=>document.querySelector(s);
+const yen=n=>"¥"+n.toLocaleString("ja-JP");
+const mins=m=>m==null?"":m>=60?`${Math.floor(m/60)}時間${m%60?m%60+"分":""}`:`${m}分`;
+const esc=t=>String(t==null?"":t).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+function toast(t){const e=$("#toast");e.textContent=t;e.classList.add("on");setTimeout(()=>e.classList.remove("on"),1800);}
+$("#salonLink").href=CFG.salonUrl;
+
+/* ---------- 質問 ---------- */
+const WISH=[["カット","cut"],["カラー","color"],["白髪をカバーしたい","gray"],["髪質改善・ツヤがほしい","tr"],["くせ・うねりを伸ばしたい","straight"],["パーマ","perm"],["頭皮ケア・ヘッドスパ","spa"],["子どもも一緒にカット","kids"],["メンズカット","men"]];
+const QS=[
+ {k:"visit",q:"ご来店は何回目ですか？",o:[["はじめて","新規"],["2回目以降","再来"]]},
+ {k:"wish",q:"今回したいことを選んでください",hint:"いくつでも選べます",multi:1,o:WISH},
+ {k:"thick",q:"髪を1本つまんでみると？",o:[["細くてやわらかい",-1,"指で感じにくいくらい"],["ふつう",0],["太くてハリ・コシがある",1,"指でしっかり感じる"]]},
+ {k:"vol",q:"毛量は多いほうですか？",o:[["少ない・地肌が透けやすい",-1],["ふつう",0],["多い・すいてもらうことが多い",1]]},
+ {k:"curl",q:"自然乾燥させると、どうなりますか？",o:[["まっすぐのまま",0],["毛先がはねる・ゆるくうねる",1],["全体がうねる・広がる",2],["強いくせで、まとまらない",3]]},
+ {k:"dmg",q:"カラー・パーマ・縮毛矯正の頻度は？",hint:"この1年で考えてください",o:[["ほとんどしない",0],["年に数回",1],["ブリーチ・縮毛矯正をしている、または2か月以内ごと",2]]},
+ {k:"tip",q:"毛先を触ったときの手ざわりは？",o:[["なめらか",0],["パサつく・からまりやすい",1],["枝毛・切れ毛が目立つ",2]]},
+ {k:"age",q:"最近、ツヤやハリ・根元のボリュームが減ったと感じますか？",o:[["特に感じない",0],["少し感じる",1],["とても感じる",2]]},
+ {k:"gray",q:"白髪の量は？",o:[["ほとんどない",0],["ちらほらある",1],["目立ってきた",2],["多い",3]]},
+ {k:"acc",q:"肌なじみがいいアクセサリーは？",color:1,o:[["ゴールド","y"],["シルバー・プラチナ","b"],["どちらも・わからない",0]]},
+ {k:"vein",q:"手首の内側の血管は何色に見えますか？",hint:"自然光の下で見るのがおすすめです",color:1,o:[["緑っぽい","y"],["青・紫っぽい","b"],["どちらともいえない",0]]},
+ {k:"eye",q:"瞳や顔立ちの印象に近いのは？",color:1,o:[["明るめ・やわらかい","light"],["黒目がはっきり・シャープ","deep"]]},
+ {k:"want",q:"なりたい髪色の印象は？",color:1,o:[["赤みを消して透明感","clear"],["ツヤ・まとまり","gloss"],["明るく・ハイトーン","bright"],["落ち着いた上品さ","calm"]]},
+ {k:"skin",q:"カラーで頭皮がしみたり、かぶれたことはありますか？",color:1,o:[["ない","none"],["しみやすい","sensitive"],["かぶれたことがある","allergy"]]}
+];
+const wantsColor=()=>(A.wish||[]).some(w=>w==="color"||w==="gray");
+const visibleQs=()=>QS.filter(q=>!q.color||wantsColor());
+
+/* ---------- 状態 ---------- */
+let view="home", A={}, step=0, filt={cat:"all"};
+const visit=()=>A.visit||"新規";
+
+/* ---------- 判定 ---------- */
+const TYPES={
+ damage:{name:"ダメージケア優先タイプ",desc:"カラーや熱の積み重ねで、パサつきや切れ毛が出やすい状態です。今は「守る」ケアを優先するのが、きれいな髪への近道です。",tips:["こすらず泡で洗い、タオルドライ後はすぐに乾かす","アイロンは150℃前後で、同じ場所に長く当てない","髪質改善トリートメントを続けると手ざわりが変わります"]},
+ curl:{name:"うねり・くせ毛タイプ",desc:"湿気を受けやすく、広がりやうねりが出やすい髪です。くせを伸ばすか、まとまりやすくするケアが合っています。",tips:["根元から乾かし、最後に冷風で表面を整える","オイルは毛先中心に少量","くせの向きに合わせたカットで扱いやすく"]},
+ fine:{name:"細毛・ボリュームアップタイプ",desc:"一本一本が細くやわらかく、根元がつぶれやすい髪です。やわらかな質感はツヤが出しやすいのが長所です。",tips:["根元を立ち上げるように、下から風を当てて乾かす","重いオイルは避け、軽いミストを","分け目を時々変えて根元のクセをつけない"]},
+ thick:{name:"太毛・多毛タイプ",desc:"ハリとコシがあり、スタイルが崩れにくい髪です。重さや広がりが出やすいので、うるおいと量感の調整がポイントです。",tips:["内側の量感調整で、表面はなめらかに","トリートメントはもみ込むようにしっかりなじませる","根元から乾かし残しのないように"]},
+ balance:{name:"バランス健康毛タイプ",desc:"太さ・くせ・ダメージのバランスがとれた、扱いやすい髪です。今の状態を保つケアを続けましょう。",tips:["毎日のトリートメントで今のツヤをキープ","紫外線の強い日は帽子やUVスプレーで保護","2〜3か月ごとのカットで毛先を整える"]}
+};
+function hair(){
+ const thick=A.thick??0, vol=A.vol??0, curl=A.curl??0, dmg=(A.dmg??0)+(A.tip??0), age=A.age??0;
+ let key; if(dmg>=3) key="damage"; else if(curl>=2) key="curl"; else if((thick<=-1&&vol<=0)||age>=2) key="fine"; else if(thick>=1||vol>=1) key="thick"; else key="balance";
+ return {key,type:TYPES[key],thick,vol,curl,dmg,age};
+}
+const PALETTE={
+ sp:{n:"イエローベース・明るめ（スプリング）",d:"明るく軽やかな暖色が、肌をいきいき見せます。",c:[["#B9885A","ミルクティー"],["#C9965F","ハニーベージュ"],["#B5704E","オレンジブラウン"],["#A88B5E","オリーブベージュ"]]},
+ au:{n:"イエローベース・深め（オータム）",d:"深みのある暖色で、ツヤと落ち着きが出ます。",c:[["#6E4A32","チョコブラウン"],["#7A5A3A","モカ"],["#5E5236","カーキ"],["#8A4E33","テラコッタ"]]},
+ su:{n:"ブルーベース・明るめ（サマー）",d:"赤みを抑えた、やわらかい寒色で透明感が出ます。",c:[["#8C8178","グレージュ"],["#9E8189","ラベンダーアッシュ"],["#7F7E80","シルバーアッシュ"],["#A1737B","ピンクベージュ"]]},
+ wi:{n:"ブルーベース・深め（ウィンター）",d:"コントラストのある寒色・暗めの髪色が映えます。",c:[["#3A3437","ブルーブラック"],["#4A3B44","ダークバイオレット"],["#4B4743","ダークアッシュ"],["#5A2F38","カシス"]]}
+};
+function color(){
+ if(!wantsColor()) return null;
+ let y=0,b=0; [A.acc,A.vein].forEach(x=>{if(x==="y")y++; if(x==="b")b++;});
+ const base=y>=b?"y":"b", light=A.eye!=="deep";
+ const P=PALETTE[base==="y"?(light?"sp":"au"):(light?"su":"wi")];
+ const notes=[], N=CFG.colorNotes;
+ if(A.skin==="allergy") notes.push(N.allergy); else {
+   if(A.skin==="sensitive") notes.push(N.sensitive);
+   if(A.want==="clear"||base==="b") notes.push(N.clear);
+   if(A.want==="gloss") notes.push(N.gloss);
+   if((A.gray??0)>=2||(A.wish||[]).includes("gray")) notes.push(N.gray);
+   if(A.want==="bright") notes.push("ハイトーンはケアブリーチを使うプランになります。ダメージを抑えるトリートメント付きがおすすめです。");
+ }
+ return {P,notes,base};
+}
+function wantKw(){
+ const h=hair(), w=A.wish||[], k=new Set();
+ if(h.dmg>=2) k.add("damage"); if(h.curl>=2) k.add("curl"); if(h.key==="fine") {k.add("volume");} if(h.age>=1) k.add("age");
+ if((A.gray??0)>=2||w.includes("gray")) k.add("gray"); if((A.gray??0)>=1 && visit()==="再来") k.add("retouch");
+ if(A.want==="bright") k.add("highTone"); if(A.want==="clear") k.add("clear"); if(A.want==="gloss"||w.includes("tr")) k.add("gloss");
+ if(A.skin==="sensitive") k.add("sensitive"); if(A.skin==="allergy") k.add("allergy");
+ if(w.includes("kids")) k.add("kids"); if(w.includes("men")) k.add("men"); if(w.includes("spa")) k.add("scalp");
+ return k;
+}
+function needTags(){
+ const w=A.wish||[], n=new Set();
+ if(w.includes("cut")||w.includes("men")||w.includes("kids")) n.add("cut");
+ if(w.includes("color")||w.includes("gray")) n.add("color");
+ if(w.includes("tr")) n.add("tr"); if(w.includes("straight")) n.add("straight"); if(w.includes("perm")) n.add("perm"); if(w.includes("spa")) n.add("spa");
+ return n;
+}
+const LABEL={damage:"ダメージケア",curl:"くせ・うねり",volume:"ボリューム",age:"エイジングケア",gray:"白髪",retouch:"根元の白髪",highTone:"ハイトーン",clear:"透明感",gloss:"ツヤ",sensitive:"頭皮にやさしい",allergy:"ジアミン不使用",kids:"お子様カット無料",men:"メンズ",scalp:"頭皮ケア"};
+function recommend(){
+ const need=needTags(), kw=wantKw(), out=[];
+ if(!need.size) return [];
+ const cands=[...CFG.coupons.filter(c=>c.kind==="fixed"&&(c.type==="全員"||c.type===visit())).map(c=>({...c,isCp:1})), ...CFG.sets.map(m=>({...m,isCp:0}))];
+ cands.forEach(it=>{
+   const tg=new Set(it.tags);
+   if(![...need].every(t=>tg.has(t))) return;
+   if(it.kw.includes("men") && !kw.has("men")) return;
+   if(kw.has("allergy") && tg.has("color") && !it.kw.includes("allergy")) return;
+   if(!kw.has("allergy") && it.kw.includes("allergy")) return;
+   let s=it.isCp?3:0;
+   [...tg].forEach(t=>{ if(!need.has(t)) s-= t==="tr" ? (kw.has("damage")||kw.has("curl")?0:1) : 4; });
+   const hit=it.kw.filter(k=>kw.has(k)); const STRONG=["gray","sensitive","allergy","men","kids","scalp","curl"]; hit.forEach(k=>s+=STRONG.includes(k)?5:3);
+   if(it.kw.includes("kids") && !kw.has("kids")) s-=1;
+   out.push({...it,score:s,hit});
+ });
+ out.sort((a,b)=>b.score-a.score||a.p-b.p);
+ return out.slice(0,3);
+}
+const pctFor=()=>CFG.coupons.filter(c=>c.kind==="pct"&&c.type===visit());
+function lumere(){ const h=hair(); return (h.key==="fine"||(h.key==="balance"&&h.dmg<1)||(A.wish||[]).includes("spa"))?"vol":"care"; }
+
+/* ---------- 描画 ---------- */
+function renderNav(){
+ const tabs=[["diag","おすすめ診断"],["coupon","クーポン"],["menu","メニュー"]];
+ $("#nav").innerHTML=tabs.map(([k,l])=>`<button role="tab" aria-selected="${view===k||(k==="diag"&&(view==="result"))}" data-v="${k}">${l}</button>`).join("");
+ $("#nav").querySelectorAll("button").forEach(b=>b.onclick=()=>{ if(b.dataset.v==="diag"&&view!=="diag"&&view!=="result"){step=0;} go(b.dataset.v==="diag"&&A.done?"result":b.dataset.v); });
+}
+function go(v){ view=v; render(); window.scrollTo({top:0}); }
+$("#home").onclick=()=>go("home");
+function render(){
+ renderNav();
+ ({home:renderHome,diag:renderQ,result:renderResult,coupon:renderCoupons,menu:renderMenu})[view]();
+}
+function visitSeg(){
+ return `<div class="seg" role="radiogroup" aria-label="ご来店">${["新規","再来"].map(v=>`<button role="radio" aria-checked="${visit()===v}" data-visit="${v}">${v==="新規"?"はじめての方":"2回目以降の方"}</button>`).join("")}</div>`;
+}
+function bindVisit(){ document.querySelectorAll("[data-visit]").forEach(b=>b.onclick=()=>{A.visit=b.dataset.visit;render();}); }
+
+function renderHome(){
+ const n=CFG.coupons.filter(c=>c.kind==="fixed").length;
+ $("#app").innerHTML=`<section class="card">
+   <h1>あなたに合うメニューを見つけて<br>そのまま予約</h1>
+   <p class="lead">かんたんな質問に答えるだけで、髪質と似合う髪色、おすすめのクーポンがわかります。空いている日時はホットペッパーの予約画面でそのまま選べます。</p>
+   <div class="home-btns">
+     <button class="btn primary" id="hStart"><span>1分でおすすめ診断<small>髪質・髪色・おすすめクーポン</small></span><span>→</span></button>
+     <button class="btn" id="hCp"><span>クーポンから選ぶ<small>${n}件のクーポン</small></span><span>→</span></button>
+     <button class="btn" id="hMenu"><span>メニューから選ぶ<small>通常メニュー・セットメニュー</small></span><span>→</span></button>
+   </div></section>`;
+ $("#hStart").onclick=()=>{A={visit:A.visit};step=0;go("diag");};
+ $("#hCp").onclick=()=>go("coupon"); $("#hMenu").onclick=()=>go("menu");
+}
+function renderQ(){
+ const qs=visibleQs(); if(step>=qs.length) step=qs.length-1;
+ const q=qs[step], sel=A[q.k];
+ const isSel=o=>q.multi?(sel||[]).includes(o[1]):sel===o[1];
+ $("#app").innerHTML=`<section class="card">
+   <div class="progress"><span>Q${step+1} / ${qs.length}</span><div class="bar"><i style="width:${step/qs.length*100}%"></i></div></div>
+   <p class="q">${q.q}</p>${q.hint?`<p class="hint">${q.hint}</p>`:""}
+   <div class="opts" role="${q.multi?"group":"radiogroup"}">${q.o.map((o,i)=>`<button class="opt${q.multi?" multi":""}" role="${q.multi?"checkbox":"radio"}" aria-checked="${isSel(o)}" data-i="${i}"><span class="dot"></span><span>${o[0]}${o[2]?`<small>${o[2]}</small>`:""}</span></button>`).join("")}</div>
+   <div class="navrow"><button class="btn" id="prev">${step===0?"やめる":"戻る"}</button>
+   ${q.multi||step===qs.length-1?`<button class="btn primary" id="next" ${(q.multi?!(sel&&sel.length):sel==null)?"disabled":""}>${step===qs.length-1?"結果を見る":"次へ"}</button>`:""}</div></section>`;
+ document.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
+   const o=q.o[+b.dataset.i];
+   if(q.multi){ const a=A[q.k]||[]; const i=a.indexOf(o[1]); i<0?a.push(o[1]):a.splice(i,1); A[q.k]=a; renderQ(); }
+   else { A[q.k]=o[1]; if(step<visibleQs().length-1){step++;} renderQ(); }
+ });
+ $("#prev").onclick=()=>{ if(step===0) go("home"); else {step--;renderQ();} };
+ const nx=$("#next"); if(nx) nx.onclick=()=>{ if(step<visibleQs().length-1){step++;renderQ();} else {A.done=1;go("result");} };
+}
+function planCard(it,best){
+ const isCp=!!it.cid;
+ return `<div class="plan${best?" best":""}">
+   <div class="top">${best?'<span class="badge g">いちばんのおすすめ</span>':""}<span class="badge${isCp?" n":""}">${isCp?(it.type==="全員"?"クーポン":it.type+"クーポン"):"メニュー"}</span>${(it.hit||[]).map(k=>`<span class="badge">${LABEL[k]||k}</span>`).join("")}</div>
+   <span class="nm">${esc(it.n)}</span>
+   ${it.d||it.cond?`<span class="ds">${esc([it.d,it.cond].filter(Boolean).join("／"))}</span>`:""}
+   <div class="pr">${it.was?`<s>${yen(it.was)}</s>`:""}<b>${yen(it.p)}</b>${it.t?`<small>所要 ${mins(it.t)}目安</small>`:""}</div>
+   <a class="btn ${best?"gold":"primary"} block" href="${it.url}" target="_blank" rel="noopener">空き日時を見て予約する</a>
+ </div>`;
+}
+function memoText(){
+ const h=hair(), c=color(), w=(A.wish||[]).map(x=>(WISH.find(y=>y[1]===x)||[x])[0]);
+ return [`【おすすめ診断の結果】`,`ご希望：${w.join("・")}`,`髪質：${h.type.name}`,c?`似合う色：${c.P.n}`:null,A.skin&&A.skin!=="none"?`頭皮：${A.skin==="allergy"?"カラーでかぶれたことがある":"しみやすい"}`:null].filter(Boolean).join("\n");
+}
+function renderResult(){
+ const h=hair(), c=color(), recs=recommend(), pct=pctFor(), lk=lumere();
+ $("#app").innerHTML=`
+  <section class="res">
+   <div class="eyebrow">あなたの髪質</div><div class="rt">${h.type.name}</div><p>${h.type.desc}</p>
+   <div class="eyebrow">おうちケアのポイント</div><ul>${h.type.tips.map(t=>`<li>${t}</li>`).join("")}</ul>
+  </section>
+  ${c?`<section class="res">
+   <div class="eyebrow">似合う髪色の傾向</div><div class="rt" style="font-size:21px">${c.P.n}</div><p>${c.P.d}</p>
+   <div class="swatches">${c.P.c.map(([x,n])=>`<div class="sw"><i style="background:${x}"></i>${n}</div>`).join("")}</div>
+   ${c.notes.length?`<ul>${c.notes.map(n=>`<li>${esc(n)}</li>`).join("")}</ul>`:""}
+  </section>`:""}
+  <section class="card">
+   <h2>あなたへのおすすめ</h2>
+   <p class="note">${visit()==="新規"?"はじめての方":"2回目以降の方"}が使えるクーポン・メニューから選んでいます。</p>
+   <div class="list">${recs.length?recs.map((r,i)=>planCard(r,i===0)).join(""):`<div class="empty">ぴったりのセットが見つかりませんでした。下の割引クーポンで通常メニューからお選びいただくか、クーポン一覧をご覧ください。</div>`}</div>
+   ${pct.length?`<h3>通常メニューで予約するなら</h3>${pct.map(p=>`<div class="plan"><div class="top"><span class="badge n">${p.type}クーポン</span></div><span class="nm">${esc(p.n)}</span><span class="ds">${esc(p.d)}</span><a class="btn block" href="${p.url}" target="_blank" rel="noopener">このクーポンでメニューを選んで予約</a></div>`).join("")}`:""}
+   ${(A.wish||[]).includes("kids")?(()=>{const k=CFG.coupons.find(x=>x.kind==="kids");return k?`<p class="note">お子様カット：${esc(k.n)}（${esc(k.d)}）。ご予約時のご要望欄に「キッズカット希望」とお書きください。</p>`:"";})():""}
+  </section>
+  <section class="card">
+   <h3>ご予約のときに</h3>
+   <p style="font-size:14px">予約画面の「ご要望・ご質問」欄に、診断の結果を貼り付けていただくと、当日のカウンセリングがスムーズです。</p>
+   <pre class="memo" id="memo">${esc(memoText())}</pre>
+   <button class="btn sm" id="copy">診断結果をコピー</button>
+  </section>
+  <section class="card">
+   <div class="eyebrow">おうちでのケアに</div>
+   <h2><span style="font-family:var(--f-latin);letter-spacing:.1em">LUMÉRE</span> ${lk==="vol"?"volume up shampoo":"CARE shampoo"} ＋ treatment</h2>
+   <p style="font-size:14px">${lk==="vol"?"根元がつぶれやすい髪には、髪と頭皮をしっかり洗いフワッと仕上げる volume up shampoo。":h.key==="curl"?"くせ・うねりが気になる髪には、アミノ酸系洗浄成分でやさしく洗いツヤを与える CARE shampoo。":"カラーやダメージが気になる髪には、カシミヤケラチン・シルク配合の CARE shampoo。"}仕上げの treatment で、サロン帰りの手ざわりが長続きします。</p>
+   <p style="font-size:14px">シャンプー＋トリートメント　はじめての方は <b>${yen(4400)}</b>（通常セット ${yen(6600)}）</p>
+   ${CFG.lumShop?`<a class="btn block" href="${CFG.shop}/items/${lk==="vol"?"137692742":"137692640"}" target="_blank" rel="noopener">オンラインショップで見る</a><p class="note">ご来店時に店頭でもお求めいただけます。</p>`:`<p class="note">ご来店時に店頭でお求めいただけます。髪の状態に合わせて美容師がご案内します。</p>`}
+  </section>
+  <div class="navrow"><button class="btn" id="redo">もう一度診断する</button><button class="btn" id="toCp">クーポン一覧へ</button></div>`;
+ $("#copy").onclick=async()=>{ try{await navigator.clipboard.writeText(memoText());toast("コピーしました");}catch(e){ const r=document.createRange(); r.selectNodeContents($("#memo")); const s=getSelection(); s.removeAllRanges(); s.addRange(r); toast("選択しました。コピーしてください"); } };
+ $("#redo").onclick=()=>{A={visit:A.visit};step=0;go("diag");};
+ $("#toCp").onclick=()=>go("coupon");
+}
+const CATS=[["all","すべて"],["cut","カット"],["color","カラー"],["tr","トリートメント"],["straight","縮毛矯正"],["perm","パーマ"],["spa","ヘッドスパ"]];
+function catChips(){ return `<div class="chips">${CATS.filter(([k])=>k==="all"||CFG.coupons.concat(CFG.sets).some(c=>c.tags.includes(k))).map(([k,l])=>`<button class="chip" aria-pressed="${filt.cat===k}" data-cat="${k}">${l}</button>`).join("")}</div>`; }
+function bindCats(){ document.querySelectorAll("[data-cat]").forEach(b=>b.onclick=()=>{filt.cat=b.dataset.cat;render();}); }
+function renderCoupons(){
+ const ok=c=>c.type==="全員"||c.type===visit();
+ const fixed=CFG.coupons.filter(c=>c.kind==="fixed"&&ok(c)&&(filt.cat==="all"||c.tags.includes(filt.cat)));
+ const pct=CFG.coupons.filter(c=>c.kind!=="fixed"&&ok(c));
+ $("#app").innerHTML=`<section class="card"><h2>クーポン</h2>${visitSeg()}${catChips()}</section>
+  ${pct.length?`<section class="card"><h3>割引・特典クーポン</h3>${pct.map(p=>`<div class="plan"><div class="top"><span class="badge n">${p.type==="全員"?"クーポン":p.type+"クーポン"}</span></div><span class="nm">${esc(p.n)}</span><span class="ds">${esc([p.d,p.cond].filter(Boolean).join("／"))}</span>${p.kind==="pct"?`<a class="btn block" href="${p.url}" target="_blank" rel="noopener">このクーポンでメニューを選んで予約</a>`:""}</div>`).join("")}</section>`:""}
+  <div class="list">${fixed.length?fixed.map(c=>planCard(c,false)).join(""):`<div class="empty">条件に合うクーポンがありません</div>`}</div>
+  <p class="note">クーポンの内容・価格はホットペッパービューティーの掲載内容です。予約画面で最新の内容をご確認ください。</p>`;
+ bindVisit(); bindCats();
+}
+function renderMenu(){
+ const list=CFG.sets.filter(m=>filt.cat==="all"||m.tags.includes(filt.cat));
+ $("#app").innerHTML=`<section class="card"><h2>メニュー</h2><p class="note">通常料金のメニューです。割引クーポンは「クーポン」タブからご利用ください。</p>${catChips()}</section>
+  <div class="list">${list.length?list.map(m=>planCard(m,false)).join(""):`<div class="empty">該当するメニューがありません</div>`}</div>
+  <a class="btn block" href="${CFG.reserveUrl}" target="_blank" rel="noopener">そのほかのメニューで予約する</a>`;
+ bindCats();
+}
+render();
+</script>
+
+<style>
+.install{background:var(--surface);border:1.5px solid var(--gold);border-radius:18px;padding:16px 18px;display:flex;gap:14px;align-items:flex-start}
+.install img{width:52px;height:52px;border-radius:12px;flex:none}
+.install b{display:block;font-size:15px}
+.install p{font-size:13px;color:var(--muted);line-height:1.6;margin:2px 0 8px}
+.install .row{display:flex;gap:8px;flex-wrap:wrap}
+.ios-share{display:inline-block;width:14px;height:16px;vertical-align:-2px;border:1.5px solid currentColor;border-top:0;border-radius:2px;position:relative;margin:0 2px}
+.ios-share::before{content:"";position:absolute;left:50%;top:-6px;width:1.5px;height:11px;background:currentColor;transform:translateX(-50%)}
+</style>
+<script>
+(function(){
+  const standalone = matchMedia("(display-mode: standalone)").matches || navigator.standalone;
+  let deferred=null;
+  const get=k=>{try{return localStorage.getItem(k)}catch(e){return null}}, set=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
+  window.addEventListener("beforeinstallprompt",e=>{e.preventDefault();deferred=e;show();});
+  const ios=/iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform==="MacIntel" && navigator.maxTouchPoints>1);
+  function show(){
+    if(standalone || get("installHidden")) return;
+    const main=document.getElementById("app"); if(!main || document.getElementById("installBox")) return;
+    if(!ios && !deferred) return;
+    const box=document.createElement("section"); box.className="install"; box.id="installBox";
+    box.innerHTML=`<img src="apple-touch-icon.png" alt=""><div><b>ホーム画面に追加すると、アプリのように使えます</b>
+      <p>${ios?'Safariの下にある共有ボタン <span class="ios-share"></span> をタップし、「ホーム画面に追加」を選んでください。':'ボタンを押すとホーム画面にアイコンが追加されます。'}</p>
+      <div class="row">${ios?"":'<button class="btn primary sm" id="doInstall">ホーム画面に追加</button>'}<button class="btn sm" id="hideInstall">閉じる</button></div></div>`;
+    main.parentNode.insertBefore(box, main);
+    const di=document.getElementById("doInstall"); if(di) di.onclick=async()=>{ deferred.prompt(); await deferred.userChoice; deferred=null; box.remove(); };
+    document.getElementById("hideInstall").onclick=()=>{ set("installHidden","1"); box.remove(); };
+  }
+  window.addEventListener("load",()=>{ show(); if("serviceWorker" in navigator) navigator.serviceWorker.register("sw.js").catch(()=>{}); });
+})();
+</script>
+</body>
+</html>
